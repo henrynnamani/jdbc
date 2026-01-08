@@ -9,14 +9,18 @@ public class DemoJdbc {
         String url = "jdbc:postgresql://localhost:5433/java_learn";
         String username = "testuser";
         String password = "testpass";
-        String query = "INSERT INTO student VALUES (5, 15, 'john')";
+        String query = "INSERT INTO student VALUES (?, ?, ?)";
 
         Class.forName("org.postgresql.Driver");
         Connection con = DriverManager.getConnection(url, username, password);
 
-        Statement sta = con.createStatement();
+        PreparedStatement sta = con.prepareStatement(query);
 
-        boolean status = sta.execute(query);
+        sta.setInt(1, 6);
+        sta.setInt(2, 50);
+        sta.setString(3, "Patrick");
+
+        boolean status = sta.execute();
 
         System.out.println(status);
 //        System.out.println(result.next());
